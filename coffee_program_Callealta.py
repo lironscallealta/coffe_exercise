@@ -149,6 +149,17 @@ def cost_product_resources_updates(product, users_cash):
         resources["coffee"] = resources["coffee"] - coffee
         return change
 
+def enough_resources(resources_to_check: dict, prompt_product: str):
+    measure = ["ml", "ml", "g"]
+    counting = 0
+    for items in resources_to_check:
+
+
+            if resources_to_check[items] > resources[items]:
+
+                print(f"not enough {items}: {resources[items]} {measure[counting]}.\nIt needs to be refilled")
+            counting +=1
+
 #def to run program
 
 def running():
@@ -159,13 +170,18 @@ def running():
             off(prompt) #checking out if they want to turn off
         elif prompt == "report":
             report(cash)
+            running()
+
         user_amount = money_user_dict()
 
-        print(f"You insert ${how_much_money_user_put(user_amount)}")
+        print(f"You insert ${round(how_much_money_user_put(user_amount),2)}")
         money_float_user_total = how_much_money_user_put(user_amount)
         your_change = cost_product_resources_updates(prompt, money_float_user_total)
+        if your_change < 0:
+            print(f"you dont have enough money, money being refund it ${round(how_much_money_user_put(user_amount),2)}")
+            running()
         print(f"your change of {prompt} which cost ${MENU[prompt]["cost"]} is ${round(your_change,2)}")
-        print(resources)
+        enough_resources(MENU[prompt]["ingredients"], prompt)
 
         should_continue = input("Do you want to continue? [y/n]").lower()
         while should_continue not in ["y", "n"]:
@@ -181,6 +197,7 @@ running()
 #All code made by Rodrigo Callealta except data giving by teacher Angela from Udemy
 #Download the PDF
 # for the  program requirements here: https://drive.google.com/uc?export=download&id=1eIZt2TeFGVrk4nXkx8E_5Slw2coEcOUo
+
 
 
 
