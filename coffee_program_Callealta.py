@@ -1,4 +1,6 @@
-# data program
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 
 MENU = {
     "espresso": {
@@ -225,8 +227,12 @@ def running():
             going = True
 
 
-# trying program ;D
-running()
+def main() -> None:
+    running()
+
+
+if __name__ == "__main__":
+    main()
 
 # All code made by Rodrigo Callealta except data giving by teacher Angela from Udemy
 # Download the PDF
