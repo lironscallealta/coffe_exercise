@@ -34,7 +34,8 @@ resources = {
     "coffee": 100,
 }
 
-male_names_ending_in_a = [
+
+MALE_NAMES_ENDSWITH_A = [
     "Luca",
     "Andrea",      # male in Italy
     "Mattia",
@@ -62,8 +63,7 @@ def checking_machine_resources(selected_coffee_ingredients: dict, type_of_coffee
 
         if machine_ingredient - selected_coffee_ingredients[ingredients] < 0:
             run_of_resources = True
-            print(f"\n{ingredients.capitalize()} is less than requires for {type_of_coffee}"
-                  f" -- {ingredients.capitalize()} is {machine_ingredient} and It needs {selected_coffee_ingredients[ingredients]}\n")
+            print(f"\n{ingredients.capitalize()} is less than requires for {type_of_coffee} -- {ingredients.capitalize()} is {machine_ingredient} and It needs {selected_coffee_ingredients[ingredients]}\n")
         else:
             resources[ingredients] = machine_ingredient - selected_coffee_ingredients[ingredients]
 
@@ -73,23 +73,37 @@ def delivering_coffee(resources_to_make_coffee: bool, type_of_coffee: str) -> bo
 
     if not resources_to_make_coffee:
         resources_to_make_coffee = True
-
+        genre = {"man": "Mr",
+                 "woman": "Ms"}
         if resources_to_make_coffee:
-            costumer = input("please write your name: ").capitalize()
+            costumer = input("Please write your name: ").capitalize()
             if not costumer.isalpha():
                 print("Name can not contain weird characters")
             while not costumer.isalpha():
-                costumer = input("please write a proper name: ").capitalize()
-            genre = {"man": "Mr",
-                     "woman" : "Ms"}
+                costumer = input("Please write a proper name: ").capitalize()
+
             last_letter = costumer[-1]
 
-            if last_letter == "a" and costumer not in male_names_ending_in_a:
+            if last_letter == "a" and costumer not in MALE_NAMES_ENDSWITH_A:
                client_genre = genre["woman"]
-            elif last_letter != "a" or costumer in male_names_ending_in_a:
+            elif costumer in MALE_NAMES_ENDSWITH_A:
+                not_sure = input("Are you Mr or Ms?\nYour name in some countries may be for both genres:\n").lower()
+                while not_sure not in ["mr", "ms"]:
+                    not_sure = input("Write only Mr or Ms.\nYour name in some countries may be for both genres:\n").lower()
+                    if not_sure == "mr":
+                        client_genre = genre["man"]
+                    else:
+                        client_genre = genre["woman"]
+                if not_sure.endswith("a"):
+                    client_genre = genre["woman"]
+                else:
+                    client_genre = genre["man"]
+
+            else:
                 client_genre = genre["man"]
 
-            print(f"{client_genre}. {costumer} your {type_of_coffee.capitalize()} is on the way.")
+
+            print(f"{client_genre.capitalize()}. {costumer.capitalize()} your {type_of_coffee.capitalize()} is on the way.")
             for i in range(3):
                 time.sleep(0.5)
                 print(f".", end= " ")
@@ -135,11 +149,11 @@ def filling_machine(enough: bool, type_of_coffee: str) -> None:
                     amount_machine = user_amount + amount_machine
 
 
-                if user_amount < +(300 - amount_machine) :
-                    user_amount = input(f"{i.capitalize()} must be fill with at less {+(300 - amount_machine)} to make the coffee")
-                    user_amount = is_number(user_amount)
-                    while not user_amount < +(300 - amount_machine):
-                        user_amount = input(f"{i.capitalize()} must be fill with at less {+(300 - amount_machine)} to make the coffee")
+                if amount_machine + user_amount > 300 :
+                    user_amount = input(f"{i.capitalize()} you must fill resources with at less {(amount_machine + user_amount) - 300} to make the coffee")
+                    user_amount = is_number(user_amount
+                    while amount_machine + user_amount < 300:
+                        user_amount = input(f"{i.capitalize()} you must fill resources with at lesss {(amount_machine + user_amount) - 300} to make the coffee-bucle")
                         user_amount = is_number(user_amount)
                         resources[i]= user_amount + amount_machine
 
