@@ -151,7 +151,7 @@ def filling_machine(enough: bool, type_of_coffee: str) -> None:
 
                 if amount_machine + user_amount > 300 :
                     user_amount = input(f"{i.capitalize()} you must fill resources with at less {(amount_machine + user_amount) - 300} to make the coffee")
-                    user_amount = is_number(user_amount
+                    user_amount = is_number(user_amount)
                     while amount_machine + user_amount < 300:
                         user_amount = input(f"{i.capitalize()} you must fill resources with at lesss {(amount_machine + user_amount) - 300} to make the coffee-bucle")
                         user_amount = is_number(user_amount)
