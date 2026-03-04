@@ -209,3 +209,5 @@ while True:
         enough_resources = checking_machine_resources(dict_user, choose)
         delivering = delivering_coffee(enough_resources, choose)
         filling_machine(delivering, choose)
+#bien
+
